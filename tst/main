@@ -1,0 +1,30 @@
+.EXTERN _op1 ; Declara modulo da operacao 1 como externo
+.EXTERN _op2 ; Declara modulo da operacao 2 como externo
+.EXTERN _op3 ; Declara modulo da operacao 3 como externo
+.EXTERN _op4 ; Declara modulo da operacao 4 como externo
+.EXTERN _op5 ; Declara modulo da operacao 5 como externo
+loadi A0 IO      ;A0 = OP
+loadi A1 IO      ;A1 = A
+loadi A2 IO      ;A2 = B
+loadi A3 IO      ;A3 = C
+subtract A0 1
+jmpz A0 _opp1     ; A0 == 1
+subtract A0 1
+jmpz A0 _opp2     ; A0 == 2
+subtract A0 1
+jmpz A0 _opp3     ; A0 == 3
+subtract A0 1
+jmpz A0 _opp4     ; A0 == 4
+subtract A0 1
+jmpz A0 _opp5     ; A0 == 5
+exit
+_opp1: call _op1   ; Chama modulo para retornar o maior dos 3
+exit
+_opp2: call _op2   ; Chama modulo para retornar o menor dos 3
+exit
+_opp3: call _op3   ; Chama modulo para retornar a soma dos 3
+exit
+_opp4: call _op4   ; Chama modulo para retornar o produto dos 3
+exit
+_opp5: call _op5   ; Chama modulo para retornar a media dos 3
+exit

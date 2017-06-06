@@ -1,0 +1,22 @@
+_op2: move A4 A1                                 ; A4 = A1
+	        subtract A4 A2 		        
+	        jmpn A4 _A1_menor_A2  ;A1 < A2
+	        jump _A2_menor_A1
+	        return
+_A1_menor_A2: call _A1menorA2
+exit
+_A1menorA2: move A5 A1 		; A5 = A1
+			    subtract A5 A3 	 
+		            jmpn A5 _A1_menor ; A1 < A3
+			    storei A3 IO
+		 	    return
+_A1_menor: storei A1 IO
+exit
+_A2_menor_A1: call _A2menorA1
+exit
+_A2menorA1: move A5 A2 		; A5 = A2
+			     subtract A5 A3 	
+			     jmpn A5 _A2_menor ; A2 < A3
+			     storei A3 IO
+			     return
+_A2_menor: storei A2 IO

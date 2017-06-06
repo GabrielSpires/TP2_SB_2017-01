@@ -1,0 +1,4 @@
+_op3: add A1 A2                                 ; A1 = A1 + A2
+	  add A1 A3 				; A1 = (A1 + A2) + A3 		        
+	  storei A1 IO
+	  return
