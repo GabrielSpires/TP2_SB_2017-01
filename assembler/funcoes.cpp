@@ -253,15 +253,15 @@ void printa_memoria(ifstream *entrada, ofstream *saida, vector<bitset<8> > memor
 
     //Só printa no arquivo de acordo com o formato do arquivo .mif
     for(int i=0; i<memoria.size(); i++, pc++){
-        *saida << hex << setw(2) << setfill('0') << uppercase << pc << "        :  " << memoria[i] << ";";
+        *saida /*<< hex << setw(2) << setfill('0') << uppercase << pc << "        :  " */<< memoria[i] << endl;
         // if(i%2 == 0 && getline(*entrada, le_instrucao, '\n')){
         //  *saida << "              -- " << le_instrucao << endl;
         // }
         // else{
-                *saida << "              -- " << endl;
+                // *saida << ";              -- " << endl;
         // }
     }
-    *saida << "END;" << endl; //Rodapé do arquivo de saída .mif
+    // *saida << "END;" << endl; //Rodapé do arquivo de saída .mif
 }
 
 void preenche_tabela_tipos(vector<Tabela_tipos>& lista_tipos){

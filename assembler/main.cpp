@@ -12,7 +12,7 @@ int main(int argc, char const *argv[]){
     saida.open(argv[2]); //Cria o arquivo de saida
 
     //Escreve o cabeçalho do arquivo tipo .mif
-    escreve_cabecalho_mif(&saida);
+    // escreve_cabecalho_mif(&saida);
 
     //Preenche a lista de tipos de instrução
     preenche_tabela_tipos(lista_tipos); 
@@ -30,19 +30,3 @@ int main(int argc, char const *argv[]){
     saida.close();
     return 0;
 }
-
-/*  
-    !!!!! A FAZER: !!!!!
-    //Testar os programas em assembly (testar no CPUSim) e comparar com a saída do TP
-
-    // Fazer programas com essas funções pra testar
-    // "divide" //00110 |op|reg|reg|un| |5|3|3|5| ******
-    // "jmpn"   //01001 |op|reg|addr| |5|3|8| **********
-    // "load"   //01011 |op|reg|reg|un| |5|3|3|5| ******
-    // "store"  //01100 |op|reg|reg|un| |5|3|3|5| ******
-    // "clear"  //01110 |op|reg|un| |5|3|8| ************
-
-    Fazer ao menos dois programas em Assembly que, juntos, executem ao menos dois
-    terços das instruções da máquina Swombat (melhor testar todas) e ao menos uma
-    chamada de função ou procedimento.
-*/
