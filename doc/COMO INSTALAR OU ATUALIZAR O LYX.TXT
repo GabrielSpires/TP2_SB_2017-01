@@ -1,0 +1,3 @@
+Copie e cole esse comando inteiro no terminal
+
+sudo add-apt-repository ppa:lyx-devel/release && sudo apt-get update && sudo apt-get install lyx
