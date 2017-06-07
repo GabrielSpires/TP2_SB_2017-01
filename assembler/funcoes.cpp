@@ -247,9 +247,13 @@ void escreve_cabecalho_mif(ofstream *saida){
     *saida << "DEPTH = 256;\nWIDTH = 8;\nADDRESS_RADIX = HEX;\nDATA_RADIX = BIN;\nCONTENT\nBEGIN\n" << endl;
 }
 
-void printa_memoria(ifstream *entrada, ofstream *saida, vector<bitset<8> > memoria){
-    string le_instrucao;
+void printa_memoria(ifstream *entrada, ofstream *saida, vector<bitset<8> > memoria, char const* nome_entrada){
+    string le_instrucao, nome_modulo;
     int pc = 0;
+
+    nome_modulo = nome_entrada;
+    nome_modulo.resize(nome_modulo.size()-2);
+    *saida << nome_modulo << endl;
 
     //Só printa no arquivo de acordo com o formato do arquivo .mif
     for(int i=0; i<memoria.size(); i++, pc++){

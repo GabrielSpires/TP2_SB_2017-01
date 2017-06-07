@@ -24,9 +24,24 @@ int main(int argc, char const *argv[]){
     traduz_programa_fonte(&entrada, memoria, lista_labels, lista_tipos, ILC); //Passagem 2
 
     //Printa o conteúdo da memória no arquivo de saída
-    printa_memoria(&entrada, &saida, memoria);
+    printa_memoria(&entrada, &saida, memoria, argv[1]);
 
     entrada.close();
     saida.close();
     return 0;
 }
+
+/*
+    Montador
+
+    Tabela de pontos de entrada (Lista de labels)
+    Tabela dos EXTERN com lista das instruções que usam o que foi chamado no EXTERN
+    Dicionario de relocação
+
+    1-Nome do modulo
+    2-Lista de labels do modulo
+    2/3-Lista de EXTERNs
+    4-Código
+    5-Dicionario de relocação
+    6-Final do módulo
+*/
