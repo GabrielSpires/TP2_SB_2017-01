@@ -4,7 +4,7 @@ int main(int argc, char const *argv[]){
     int ILC=0; //Instruction Location Counter (to usando pra saber até que posição a memória é usada)
     vector<bitset<8> > memoria(256, 0); //Lista de 256 binarios de 8 bits iniciados com 0
     vector<Label> lista_labels; //Lista do tipo Label que guarda o nome e endereço de cada label
-    vector<Tabela_tipos> lista_tipos(22); //Lista que guarda os numeros dos tipos de operações suportadas
+    vector<Tabela_tipos> lista_tipos(23); //Lista que guarda os numeros dos tipos de operações suportadas
     ifstream entrada; //InputFile em assembly
     ofstream saida; //OutputFile em formato .mif
 
@@ -34,10 +34,10 @@ int main(int argc, char const *argv[]){
 /*
     Montador
 
-    1-Nome do modulo
-    2-Lista de labels do modulo
-    2/3-Lista de EXTERNs
-    4-Código
-    5-Dicionario de relocação
-    6-Final do módulo
+    1-Nome do modulo *
+    2-Lista de labels do modulo *
+    2/3-Lista de EXTERNs *
+    4-Código *
+    5-Dicionario de relocação*
+    6-Final do módulo*
 */

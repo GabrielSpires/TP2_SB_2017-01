@@ -205,6 +205,9 @@ void traduz_programa_fonte(ifstream *entrada,
                 memoria[*ILC] = bitset<8>(valor_data_string.substr(valor_data_string.size()-(8*(num_bytes-i)), 8));
             }
         }
+        else if (tipo == 8){
+            continue; // Caso a instrução seja um .EXTERN a linha não é escrita na memória  o PC não soma
+        }
         pc += 2; //Incrementa o PC (cada instrução ocupa 2 espaços na mem.)
     }
 
@@ -234,6 +237,15 @@ void preenche_lista_labels(ifstream *entrada, vector<Label>& lista_labels, int *
             instrucao >> label;
             if(label == ".data") *ILC -= 2; //Se a instrução lida for .data não contar no ILC
             else if (label[0] == '_') pc -=2; //Se continua lendo label não contar essa posição
+        }
+        if (label == ".EXTERN"){ //Vê se é uma .EXTERN
+            *ILC -= 2; //Se a instrução lida for .EXTERN não contar no ILC
+            instrucao >> label; //Lê qual label é referenciada pelo .EXTERN
+            label_aux.nome_label = label;
+            label_aux.endereco_label = -1; //Flag que indica que a Label é externa
+
+            lista_labels.push_back(label_aux);
+
         }
         pc += 2;
     }
@@ -265,7 +277,7 @@ void printa_memoria(ifstream *entrada, ofstream *saida, vector<bitset<8> > memor
     *saida << "##" << endl;
 
     //Só printa no arquivo de acordo com o formato do modulo objeto
-    for(int i=0; i<ILC/3/*memoria.size()*/; i++, pc++){ //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    for(int i=0; i<ILC/*memoria.size()*/; i++, pc++){ //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         *saida /*<< hex << setw(2) << setfill('0') << uppercase << pc << "        :  " */<< memoria[i] << endl;
         // if(i%2 == 0 && getline(*entrada, le_instrucao, '\n')){
         //  *saida << "              -- " << le_instrucao << endl;
@@ -345,4 +357,8 @@ void preenche_tabela_tipos(vector<Tabela_tipos>& lista_tipos){
     // |.data|numBytes|valor|
     lista_tipos[21].nome_operacao = ".data";
     lista_tipos[21].tipo_operacao = 7;
+
+    //.EXTERN
+    lista_tipos[22].nome_operacao = ".EXTERN";
+    lista_tipos[22].tipo_operacao = 8;
 }
