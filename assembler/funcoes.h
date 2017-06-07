@@ -20,8 +20,8 @@ typedef struct Label{
 int busca_tipo(string, vector<Tabela_tipos>);
 int busca_label(string, vector<Label>);
 string num_reg(string);
-void traduz_programa_fonte(ifstream*, vector<bitset<8> >&, vector<Label>, vector<Tabela_tipos>, int);
+void traduz_programa_fonte(ifstream*, vector<bitset<8> >&, vector<Label>, vector<Tabela_tipos>, int*);
 void preenche_lista_labels(ifstream*, vector<Label>&, int*);
 void escreve_cabecalho_mif(ofstream*);
-void printa_memoria(ifstream*, ofstream*, vector<bitset<8> >, char const*);
+void printa_memoria(ifstream*, ofstream*, vector<bitset<8> >, char const*, int, vector<Label>);
 void preenche_tabela_tipos(vector<Tabela_tipos>&);

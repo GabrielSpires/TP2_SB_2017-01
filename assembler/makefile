@@ -11,6 +11,7 @@ tp1: main.cpp funcoes.cpp
 
 run: main.cpp funcoes.cpp
 	@g++ -o mont main.cpp funcoes.cpp
+	@reset
 	@./mont ../tst/teste_moodle.a ../tst/teste_moodle.o
 	@echo ""
 	@echo "Abrindo arquivo '../tst/teste_moodle.o'..."

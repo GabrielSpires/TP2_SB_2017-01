@@ -54,7 +54,7 @@ void traduz_programa_fonte(ifstream *entrada,
                             vector<bitset<8> > &memoria, 
                             vector<Label> lista_labels, 
                             vector<Tabela_tipos> lista_tipos,
-                            int ILC){
+                            int* ILC){
     stringstream instrucao; //String manipulável que guarda a instrução
     string le_instrucao, //Usada no getline() pra ler o arquivo
            campo, //Recebe um a um os campos da instrução
@@ -201,8 +201,8 @@ void traduz_programa_fonte(ifstream *entrada,
 
             //Guarda na memória cada byte do valor alocado, um a um
             //ILC é usado pra saber em qual posição a últma instrução foi colocada na memória
-            for (int i = 0; i < num_bytes; i++, ILC++){
-                memoria[ILC] = bitset<8>(valor_data_string.substr(valor_data_string.size()-(8*(num_bytes-i)), 8));
+            for (int i = 0; i < num_bytes; i++, *ILC+=1){
+                memoria[*ILC] = bitset<8>(valor_data_string.substr(valor_data_string.size()-(8*(num_bytes-i)), 8));
             }
         }
         pc += 2; //Incrementa o PC (cada instrução ocupa 2 espaços na mem.)
@@ -247,16 +247,25 @@ void escreve_cabecalho_mif(ofstream *saida){
     *saida << "DEPTH = 256;\nWIDTH = 8;\nADDRESS_RADIX = HEX;\nDATA_RADIX = BIN;\nCONTENT\nBEGIN\n" << endl;
 }
 
-void printa_memoria(ifstream *entrada, ofstream *saida, vector<bitset<8> > memoria, char const* nome_entrada){
+void printa_memoria(ifstream *entrada, ofstream *saida, vector<bitset<8> > memoria, char const* nome_entrada, int ILC, vector<Label> lista_labels){
     string le_instrucao, nome_modulo;
     int pc = 0;
+    size_t diretorio;
 
-    nome_modulo = nome_entrada;
-    nome_modulo.resize(nome_modulo.size()-2);
-    *saida << nome_modulo << endl;
+    nome_modulo = nome_entrada;                     // Joga o argv[] numa string
+    diretorio = nome_modulo.find_last_of("/");      // Acha na string onde começa o nome do arquivo
+    nome_modulo = nome_modulo.substr(diretorio+1);  // Ignora o caminho do arquivo. Ex: "../tst/main.a" vira só "main.a"
+    nome_modulo.resize(nome_modulo.size()-2);       // Retira a extensao do arquivo. Ex: "main.a" vira "main"
 
-    //Só printa no arquivo de acordo com o formato do arquivo .mif
-    for(int i=0; i<memoria.size(); i++, pc++){
+    *saida << nome_modulo << " = nome do modulo" << endl
+           << ILC << " = tamanho do modulo" << endl;
+    for(int i=0; i<lista_labels.size(); i++){
+        *saida << lista_labels[i].nome_label << " " << lista_labels[i].endereco_label << endl;
+    }
+    *saida << "##" << endl;
+
+    //Só printa no arquivo de acordo com o formato do modulo objeto
+    for(int i=0; i<ILC/3/*memoria.size()*/; i++, pc++){ //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         *saida /*<< hex << setw(2) << setfill('0') << uppercase << pc << "        :  " */<< memoria[i] << endl;
         // if(i%2 == 0 && getline(*entrada, le_instrucao, '\n')){
         //  *saida << "              -- " << le_instrucao << endl;

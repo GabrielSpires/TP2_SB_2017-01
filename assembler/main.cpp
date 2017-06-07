@@ -21,10 +21,10 @@ int main(int argc, char const *argv[]){
     preenche_lista_labels(&entrada, lista_labels, &ILC); //Passagem 1
 
     //Transforma cada instrução lida em seu equivalente binário
-    traduz_programa_fonte(&entrada, memoria, lista_labels, lista_tipos, ILC); //Passagem 2
+    traduz_programa_fonte(&entrada, memoria, lista_labels, lista_tipos, &ILC); //Passagem 2
 
     //Printa o conteúdo da memória no arquivo de saída
-    printa_memoria(&entrada, &saida, memoria, argv[1]);
+    printa_memoria(&entrada, &saida, memoria, argv[1], ILC, lista_labels);
 
     entrada.close();
     saida.close();
@@ -33,10 +33,6 @@ int main(int argc, char const *argv[]){
 
 /*
     Montador
-
-    Tabela de pontos de entrada (Lista de labels)
-    Tabela dos EXTERN com lista das instruções que usam o que foi chamado no EXTERN
-    Dicionario de relocação
 
     1-Nome do modulo
     2-Lista de labels do modulo
