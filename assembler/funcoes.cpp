@@ -206,7 +206,7 @@ void traduz_programa_fonte(ifstream *entrada,
             }
         }
         else if (tipo == 8){
-            continue; // Caso a instrução seja um .EXTERN a linha não é escrita na memória  o PC não soma
+            continue; // Caso a instrução seja um .extern a linha não é escrita na memória  o PC não soma
         }
         pc += 2; //Incrementa o PC (cada instrução ocupa 2 espaços na mem.)
     }
@@ -238,9 +238,9 @@ void preenche_lista_labels(ifstream *entrada, vector<Label>& lista_labels, int *
             if(label == ".data") *ILC -= 2; //Se a instrução lida for .data não contar no ILC
             else if (label[0] == '_') pc -=2; //Se continua lendo label não contar essa posição
         }
-        if (label == ".EXTERN"){ //Vê se é uma .EXTERN
-            *ILC -= 2; //Se a instrução lida for .EXTERN não contar no ILC
-            instrucao >> label; //Lê qual label é referenciada pelo .EXTERN
+        if (label == ".extern"){ //Vê se é uma .extern
+            *ILC -= 2; //Se a instrução lida for .extern não contar no ILC
+            instrucao >> label; //Lê qual label é referenciada pelo .extern
             label_aux.nome_label = label;
             label_aux.endereco_label = -1; //Flag que indica que a Label é externa
 
@@ -354,7 +354,7 @@ void preenche_tabela_tipos(vector<Tabela_tipos>& lista_tipos){
     lista_tipos[21].nome_operacao = ".data";
     lista_tipos[21].tipo_operacao = 7;
 
-    //.EXTERN
-    lista_tipos[22].nome_operacao = ".EXTERN";
+    //.extern
+    lista_tipos[22].nome_operacao = ".extern";
     lista_tipos[22].tipo_operacao = 8;
 }

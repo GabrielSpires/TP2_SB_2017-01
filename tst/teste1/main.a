@@ -1,8 +1,8 @@
-.EXTERN _op1 ; Declara modulo da operacao 1 como externo
-.EXTERN _op2 ; Declara modulo da operacao 2 como externo
-.EXTERN _op3 ; Declara modulo da operacao 3 como externo
-.EXTERN _op4 ; Declara modulo da operacao 4 como externo
-.EXTERN _op5 ; Declara modulo da operacao 5 como externo
+.extern _op1 ; Declara modulo da operacao 1 como externo
+.extern _op2 ; Declara modulo da operacao 2 como externo
+.extern _op3 ; Declara modulo da operacao 3 como externo
+.extern _op4 ; Declara modulo da operacao 4 como externo
+.extern _op5 ; Declara modulo da operacao 5 como externo
 loadi A0 IO      ;A0 = OP
 loadi A1 IO      ;A1 = A
 loadi A2 IO      ;A2 = B
