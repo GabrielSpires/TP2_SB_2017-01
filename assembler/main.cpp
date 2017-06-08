@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]){
     traduz_programa_fonte(&entrada, memoria, lista_labels, lista_tipos, &ILC); //Passagem 2
 
     //Printa o conteúdo da memória no arquivo de saída
-    printa_memoria(&entrada, &saida, memoria, argv[1], ILC, lista_labels);
+    printa_modulo(&entrada, &saida, memoria, argv[1], ILC, lista_labels);
 
     entrada.close();
     saida.close();

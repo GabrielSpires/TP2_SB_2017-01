@@ -12,11 +12,11 @@ tp1: main.cpp funcoes.cpp
 run: main.cpp funcoes.cpp
 	@g++ -o mont main.cpp funcoes.cpp
 	@reset
-	@./mont ../tst/main.a ../tst/main.o
+	@./mont ../tst/teste_moodle.a ../tst/teste_moodle.o
 	@echo ""
 	@echo "Abrindo arquivo '../tst/main.o'..."
 	@echo ""
-	@cat ../tst/main.o
+	@cat ../tst/teste_moodle.o
 
 val: main.cpp funcoes.cpp
 	g++ -g -o mont main.cpp funcoes.cpp
