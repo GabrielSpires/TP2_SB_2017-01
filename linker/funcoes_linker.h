@@ -3,4 +3,4 @@
 
 using namespace std;
 
-void ligacao(ofstream*, int, const char*);
+void ligacao(ofstream*, int, char const**); 
