@@ -268,7 +268,7 @@ void printa_modulo(ifstream *entrada, ofstream *saida, vector<bitset<8> > memori
     nome_modulo = nome_modulo.substr(diretorio+1);  // Ignora o caminho do arquivo. Ex: "../tst/main.a" vira só "main.a"
     nome_modulo.resize(nome_modulo.size()-2);       // Retira a extensao do arquivo. Ex: "main.a" vira "main"
 
-    *saida << "MODULE_START " << endl   //Marcação de inicio do módulo
+    *saida << "MODULE_START" << endl   //Marcação de inicio do módulo
            << nome_modulo << endl       //Nome do arquivo
            << ILC << endl;              //Tamanho do módulo (usado pra relocação)
     for(int i=0; i<lista_labels.size(); i++){

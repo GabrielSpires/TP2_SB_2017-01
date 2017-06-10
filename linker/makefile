@@ -5,9 +5,9 @@ run: main.cpp funcoes_linker.cpp
 	@g++ -o link main.cpp funcoes_linker.cpp
 	@reset
 	./link programa.mif ../tst/teste0/main.o ../tst/teste0/calc.o
-	@cat ligacao.temp
-	@echo ""
-	@echo "Arquivo: ligacao.temp"
+	@# @cat ligacao.temp
+	@# @echo ""
+	@# @echo "Arquivo: ligacao.temp"
 	
 fast: main.cpp funcoes_linker.cpp
 	@g++ -o link main.cpp funcoes_linker.cpp

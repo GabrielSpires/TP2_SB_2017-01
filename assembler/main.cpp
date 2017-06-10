@@ -33,10 +33,11 @@ int main(int argc, char const *argv[]){
 
 /*
     Montador
-
+    
+    0-Inicio do modulo
     1-Nome do modulo *
-    2-Lista de labels do modulo *
-    2/3-Lista de EXTERNs *
+    2-Lista de EXTERNs *
+    2/3-Lista de labels do modulo *
     4-Código *
     5-Dicionario de relocação*
     6-Final do módulo*
