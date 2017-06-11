@@ -27,6 +27,17 @@ void ligacao(ofstream*, int, char const**);
 
 // Função que recalcula os endereços
 // de memória usados no programa
-void relocacao(ifstream*, vector<bitset<8> >&, vector<Label>&);
+void relocacao(ifstream*, vector<bitset<8> >&, vector<Label>&, vector<Extern>&);
+
+//Junta as labels com o mesmo nome
+//pra ter todos os endereços num
+//índice so da lista
+void junta_labels(vector<Label>&);
+
+void localiza_externs(vector<Label>&, vector<Extern>&);
+
+void recalcula_memoria(vector<bitset<8> >&, vector<Label>);
 
 void limpa_string(stringstream&);
+
+void printa_memoria(/*ofstream *, */vector<bitset<8> >);

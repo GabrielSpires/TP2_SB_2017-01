@@ -9,9 +9,15 @@ int main(int argc, char const *argv[]){
 
     ligacao(&saida_montador, argc, argv);
 
-    relocacao(&saida_ligacao, memoria, lista_labels);
+    relocacao(&saida_ligacao, memoria, lista_labels, lista_externs);
 
-    cout << " -------------------------- " << endl;
+    junta_labels(lista_labels);
+
+    localiza_externs(lista_labels, lista_externs);
+
+    recalcula_memoria(memoria, lista_labels);
+
+    cout << " -------------------------- LABELS" << endl;
     for(int i=0; i<lista_labels.size(); i++){
         cout << lista_labels[i].nome_label << " "
              << lista_labels[i].endereco_label << " ";
@@ -19,8 +25,18 @@ int main(int argc, char const *argv[]){
             cout << lista_labels[i].endereco_instrucoes[j] << " ";
         }cout << endl;
     }
+    cout << " -------------------------- EXTERNS" << endl;
+    for(int i=0; i<lista_externs.size(); i++){
+        cout << lista_externs[i].nome_extern << " "
+             << lista_externs[i].endereco_extern << " ";
+        for(int j=0; j<lista_externs[i].endereco_instrucoes.size(); j++){
+            cout << lista_externs[i].endereco_instrucoes[j] << " ";
+        }cout << endl;
+    }
 
     saida_ligacao.close();
+
+    printa_memoria(memoria);
     
     return 0;
 }
