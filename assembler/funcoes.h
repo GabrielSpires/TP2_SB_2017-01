@@ -15,6 +15,7 @@ typedef struct Tabela_tipos{
 typedef struct Label{
     string nome_label;
     int endereco_label;
+    vector<int> endereco_instrucoes;
 }Label;
 
 typedef struct Extern{
