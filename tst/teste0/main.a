@@ -3,3 +3,4 @@ load A0 IO
 load A1 IO
 store IO A0
 call _multiplica
+exit

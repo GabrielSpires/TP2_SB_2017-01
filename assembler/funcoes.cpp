@@ -215,6 +215,57 @@ void traduz_programa_fonte(ifstream *entrada,
     entrada->seekg(0, ios::beg); //Volta a ler do inicio do arquivo
 }
 
+void preenche_lista_externs(ifstream *entrada, vector<Extern>& lista_externs){
+    stringstream instrucao;
+    string le_instrucao, label;
+    Extern label_aux;
+    int pc = 0;
+
+    while(getline(*entrada, le_instrucao, '\n')){ //Lê a linha até o enter
+        instrucao.str(string("")); //Limpa a string pra ler a proxima
+        instrucao.clear(); //Apaga o buffer da string
+        instrucao << le_instrucao; //Joga o que foi lido na string manipulavel
+        instrucao >> label; //Lê a primeira informação da linha (operador ou label)
+
+        if (label == ".extern"){ //Vê se é uma .extern
+            pc -= 2; //Se a instrução lida for .extern não contar no pc
+            instrucao >> label; //Lê qual label é referenciada pelo .extern
+            label_aux.nome_extern = label;
+            label_aux.endereco_extern = -1; //Flag que indica que a Label é externa
+
+            lista_externs.push_back(label_aux);
+        }
+        else{
+            if(label[0] == '_'){
+                instrucao >> label; //Se a linha começa com uma _label, ler a proxima palavra
+            }
+            if(label == "jump" || label == "call"){
+                instrucao >> label;
+                for(int i=0; i<lista_externs.size(); i++){ //Passa procurando pela lista de externs
+                    if(lista_externs[i].nome_extern == label){ //Testa se essa label é um extern
+                        lista_externs[i].endereco_instrucoes.push_back(pc); //Se for um extern adiciona essa instrucao à lista
+                    }
+                }
+            }
+            if(label == "loadi" || label == "storei" || label == "jmpz" || label == "jmpn"){
+                instrucao >> label; //Lê o reg da instrucao (pra ser descartado)
+                instrucao >> label; //Lê o endereço de memoria
+
+                for(int i=0; i<lista_externs.size(); i++){ //Passa procurando pela lista de externs
+                    if(lista_externs[i].nome_extern == label){ //Testa se essa label é um extern
+                        lista_externs[i].endereco_instrucoes.push_back(pc); //Se for um extern adiciona essa instrucao à lista
+                    }
+                }
+            }
+        }
+        
+        pc += 2;
+    }
+    //O arquivo foi todo lido, então precisamos resetar para ler denovo
+    entrada->clear(); //Limpa a flag EOS (End of File)
+    entrada->seekg(0, ios::beg); //Volta a ler do inicio do arquivo
+}
+
 void preenche_lista_labels(ifstream *entrada, vector<Label>& lista_labels, int *ILC){
     stringstream instrucao;
     string le_instrucao, label;
@@ -238,15 +289,6 @@ void preenche_lista_labels(ifstream *entrada, vector<Label>& lista_labels, int *
             if(label == ".data") *ILC -= 2; //Se a instrução lida for .data não contar no ILC
             else if (label[0] == '_') pc -=2; //Se continua lendo label não contar essa posição
         }
-        if (label == ".extern"){ //Vê se é uma .extern
-            *ILC -= 2; //Se a instrução lida for .extern não contar no ILC
-            instrucao >> label; //Lê qual label é referenciada pelo .extern
-            label_aux.nome_label = label;
-            label_aux.endereco_label = -1; //Flag que indica que a Label é externa
-
-            lista_labels.push_back(label_aux);
-
-        }
         pc += 2;
     }
     //O arquivo foi todo lido, então precisamos resetar para ler denovo
@@ -259,7 +301,13 @@ void escreve_cabecalho_mif(ofstream *saida){
     *saida << "DEPTH = 256;\nWIDTH = 8;\nADDRESS_RADIX = HEX;\nDATA_RADIX = BIN;\nCONTENT\nBEGIN\n" << endl;
 }
 
-void printa_modulo(ifstream *entrada, ofstream *saida, vector<bitset<8> > memoria, char const* nome_entrada, int ILC, vector<Label> lista_labels){
+void printa_modulo(ifstream *entrada, 
+                   ofstream *saida, 
+                   vector<bitset<8> > memoria, 
+                   char const* nome_entrada, 
+                   int ILC, 
+                   vector<Label> lista_labels, 
+                   vector<Extern> lista_externs){
     string le_instrucao, nome_modulo;
     size_t diretorio;
 
@@ -268,20 +316,36 @@ void printa_modulo(ifstream *entrada, ofstream *saida, vector<bitset<8> > memori
     nome_modulo = nome_modulo.substr(diretorio+1);  // Ignora o caminho do arquivo. Ex: "../tst/main.a" vira só "main.a"
     nome_modulo.resize(nome_modulo.size()-2);       // Retira a extensao do arquivo. Ex: "main.a" vira "main"
 
+    //PRIMEIRA PARTE DO MODULO
     *saida << "MODULE_START" << endl   //Marcação de inicio do módulo
            << nome_modulo << endl       //Nome do arquivo
            << ILC << endl;              //Tamanho do módulo (usado pra relocação)
-    for(int i=0; i<lista_labels.size(); i++){
+
+    //SEGUNDA PARTE DO MODULO
+    for(int i=0; i<lista_labels.size(); i++){ //Lista de labels
         *saida << lista_labels[i].nome_label << " " << lista_labels[i].endereco_label << endl;
     }
     
     *saida << "##" << endl; //Marcação de final de cabeçalho (as informações do módulo objeto acabam aqui)
 
+    //TERCEIRA PARTE DO MODULO
+    for(int i=0; i<lista_externs.size(); i++){ //Lista de externs
+        *saida << lista_externs[i].nome_extern << " " << lista_externs[i].endereco_extern << " ";
+        for(int j=0; j<lista_externs[i].endereco_instrucoes.size(); j++){
+            *saida << lista_externs[i].endereco_instrucoes[j] << " ";
+        }
+        *saida << "X" << endl;
+    }
+
+    *saida << "$$" << endl; //Marcação de final de lista de externs
+
+    //QUARTA PARTE DO MODULO
     //Printa a memoria alocada no modulo
     for(int i=0; i<ILC; i++){
         *saida << memoria[i] << endl;
     }
 
+    //SEXTA PARTE DO MODULO (cadê a quinta?)
     *saida << "MODULE_END" << endl; //Marcação de final do módulo
 }
 
