@@ -1,17 +1,24 @@
 #include "funcoes_linker.h"
 
 int main(int argc, char const *argv[]){
-    ofstream entrada_ligacao; //Arquivo que vai ser gerado na função "ligacao()"
+    ofstream saida_montador; //Arquivo que vai ser gerado na função "ligacao()"
     ifstream saida_ligacao; //Vai ler o arquivo gerado na ligação pra ser usado depois
     vector<bitset<8> > memoria(256, 0); //Lista de 256 binarios de 8 bits iniciados com 0
     vector<Label> lista_labels; //Lista do tipo Label que guarda o nome e endereço de cada label
+    vector<Extern> lista_externs;
 
-    ligacao(&entrada_ligacao, argc, argv);
-
-    saida_ligacao.open("ligacao.temp");
+    ligacao(&saida_montador, argc, argv);
 
     relocacao(&saida_ligacao, memoria, lista_labels);
 
+    cout << " -------------------------- " << endl;
+    for(int i=0; i<lista_labels.size(); i++){
+        cout << lista_labels[i].nome_label << " "
+             << lista_labels[i].endereco_label << " ";
+        for(int j=0; j<lista_labels[i].endereco_instrucoes.size(); j++){
+            cout << lista_labels[i].endereco_instrucoes[j] << " ";
+        }cout << endl;
+    }
 
     saida_ligacao.close();
     

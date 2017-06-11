@@ -1,8 +1,9 @@
 MODULE_START
-calc
-4
-_multiplica 0
-##
+calc 4
+_multiplica 0 X
+const -2 X
+END_LABELS
+END_EXTERNS
 00101000
 00100000
 10100000

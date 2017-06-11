@@ -26,7 +26,7 @@ function go_compile_back() {
     curr_pth="$(pwd)"
     echo "Going to $pth"
     cd "$pth"
-    echo make
+    echo_dbg make
     echo "Going back to $curr_pth"
     cd "$curr_pth"
 }

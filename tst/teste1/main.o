@@ -5,6 +5,7 @@ _opp2 34 14 X
 _opp3 38 18 X
 _opp4 42 22 X
 _opp5 46 26 X
+const -2 X
 END_LABELS
 _op1 -1 30 X
 _op2 -1 34 X

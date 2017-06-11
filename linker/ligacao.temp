@@ -1,8 +1,9 @@
 MODULE_START
-main
-8
-_multiplica -1
-##
+main 10
+const -2 3 4 5 X
+END_LABELS
+_multiplica -1 6 X
+END_EXTERNS
 01011000
 00000000
 01011001
@@ -11,12 +12,15 @@ _multiplica -1
 00000000
 10011000
 11111111
+00000000
+00000000
 MODULE_END
 MODULE_START
-calc
-4
-_multiplica 0
-##
+calc 4
+_multiplica 0 X
+const -2 X
+END_LABELS
+END_EXTERNS
 00101000
 00100000
 10100000

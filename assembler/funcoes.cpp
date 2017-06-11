@@ -299,6 +299,10 @@ void preenche_lista_labels(ifstream *entrada, vector<Label>& lista_labels, int *
     entrada->seekg(0, ios::beg); //Volta a ler do inicio do arquivo
     *ILC += pc;
 
+    label_aux.nome_label = "const";
+    label_aux.endereco_label = -2;
+    lista_labels.push_back(label_aux);
+
     pc = 0;
     while(getline(*entrada, le_instrucao, '\n')){
         instrucao.str(string("")); //Limpa a string pra ler a proxima
@@ -314,6 +318,15 @@ void preenche_lista_labels(ifstream *entrada, vector<Label>& lista_labels, int *
         }
         if(label == "jump" || label == "call"){
             instrucao >> label;
+
+            if(label[0] != '_' && label != "IO"){ //Testa se o endereço da instrução é uma constante
+                for(int i=0; i<lista_labels.size(); i++){
+                    if(lista_labels[i].nome_label == "const"){
+                       lista_labels[i].endereco_instrucoes.push_back(pc);
+                    }
+                }
+            }
+
             for(int i=0; i<lista_labels.size(); i++){ //Passa procurando pela lista de externs
                 if(lista_labels[i].nome_label == label){ //Testa se essa label já foi indexada
                     lista_labels[i].endereco_instrucoes.push_back(pc); //Se for um extern adiciona essa instrucao à lista
@@ -323,6 +336,14 @@ void preenche_lista_labels(ifstream *entrada, vector<Label>& lista_labels, int *
         if(label == "loadi" || label == "storei" || label == "jmpz" || label == "jmpn"){
             instrucao >> label; //Lê o reg da instrucao (pra ser descartado)
             instrucao >> label; //Lê o endereço de memoria
+
+            if(label[0] != '_' && label != "IO"){ //Testa se o endereço da instrução é uma constante
+                for(int i=0; i<lista_labels.size(); i++){
+                    if(lista_labels[i].nome_label == "const"){
+                       lista_labels[i].endereco_instrucoes.push_back(pc);
+                    }
+                }
+            }
 
             for(int i=0; i<lista_labels.size(); i++){ //Passa procurando pela lista de externs
                 if(lista_labels[i].nome_label == label){ //Testa se essa label já foi indexada

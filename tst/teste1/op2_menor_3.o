@@ -1,14 +1,15 @@
-MODULE_START 
-op2_menor_3
-44
-_op2 0
-_A1_menor_A2 10
-_A1menorA2 14
-_A1_menor 24
-_A2_menor_A1 28
-_A2menorA1 32
-_A2_menor 42
-##
+MODULE_START
+op2_menor_3 44
+_op2 0 X
+_A1_menor_A2 10 4 X
+_A1menorA2 14 10 X
+_A1_menor 24 18 X
+_A2_menor_A1 28 6 X
+_A2menorA1 32 28 X
+_A2_menor 42 36 X
+const -2 X
+END_LABELS
+END_EXTERNS
 01010100
 00100000
 00100100
