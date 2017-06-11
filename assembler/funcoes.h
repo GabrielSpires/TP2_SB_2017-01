@@ -4,6 +4,7 @@
 #include <iomanip> //Manipulaçao de IO (printar decimal como hexadecimal)
 #include <vector> //TAD de lista
 #include <bitset> //Variável do tipo binario
+#include <cstdlib>
 
 using namespace std;
 

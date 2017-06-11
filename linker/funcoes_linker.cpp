@@ -18,7 +18,7 @@ void relocacao(ifstream* saida_ligacao, vector<bitset<8> > &memoria, vector<Labe
 		limpa_string(linha_stream);
 
 		if(linha == "MODULE_START"){
-			cout << "\ninicio de mod. detectado!" << endl;
+			// cout << "\ninicio de mod. detectado!" << endl;
 			constante_relocacao += tamanho_modulo;
 
 			getline(*saida_ligacao, linha, '\n');
@@ -26,12 +26,12 @@ void relocacao(ifstream* saida_ligacao, vector<bitset<8> > &memoria, vector<Labe
 			
 			//Lê o NOME do modulo
 			linha_stream >> nome_modulo;
-			cout << "NOME: " + nome_modulo << endl;
+			// cout << "NOME: " + nome_modulo << endl;
 
 			//Lê o TAMANHO do modulo
 			linha_stream >> tamanho_modulo;
-			cout << "TAMANHO: " << tamanho_modulo << endl;
-			cout << "CONST RELOC: " << constante_relocacao << endl;
+			// cout << "TAMANHO: " << tamanho_modulo << endl;
+			// cout << "CONST RELOC: " << constante_relocacao << endl;
 			//Lê as LABELS
 			while(getline(*saida_ligacao, linha, '\n'), linha != "END_LABELS"){
 				limpa_string(linha_stream);
@@ -101,16 +101,18 @@ void ligacao(ofstream* saida_montador, int argc, char const** argv){
 	saida_montador->close();
 }
 
-void printa_memoria(vector<bitset<8> > memoria){
+void printa_memoria(ofstream *saida_mif, vector<bitset<8> > memoria){
     string le_instrucao;
     int pc = 0;
 
+    *saida_mif << "DEPTH = 256;\nWIDTH = 8;\nADDRESS_RADIX = HEX;\nDATA_RADIX = BIN;\nCONTENT\nBEGIN\n" << endl;
+
     //Só printa no arquivo de acordo com o formato do arquivo .mif
-    for(int i=0; i<14/*memoria.size()*/; i++, pc++){
-        cout /*<< hex */<< setw(2) << setfill('0') << uppercase << pc << "        :  " << memoria[i] << ";";
-        cout << "              -- " << endl;
+    for(int i=0; i<memoria.size(); i++, pc++){
+        *saida_mif << hex << setw(2) << setfill('0') << uppercase << pc << "        :  " << memoria[i] << ";";
+        *saida_mif << "              -- " << endl;
     }
-    cout << "END;" << endl; //Rodapé do arquivo de saída .mif
+    *saida_mif << "END;" << endl; //Rodapé do arquivo de saída .mif
 }
 
 void junta_labels(vector<Label> &lista_labels){
@@ -142,5 +144,13 @@ void localiza_externs(vector<Label>& lista_labels, vector<Extern>& lista_externs
 }
 
 void recalcula_memoria(vector<bitset<8> >& memoria, vector<Label> lista_labels){
-	
+	for(int i=0; i<lista_labels.size(); i++){
+		if(lista_labels[i].nome_label != "const"){
+			
+			for(int j=0; j<lista_labels[i].endereco_instrucoes.size(); j++){
+				memoria[lista_labels[i].endereco_instrucoes[j] + 1] = lista_labels[i].endereco_label;
+			}
+
+		}
+	}
 }

@@ -1,7 +1,6 @@
 MODULE_START
 op5_media_3 12
 _op5 0 X
-const -2 X
 END_LABELS
 END_EXTERNS
 00011001

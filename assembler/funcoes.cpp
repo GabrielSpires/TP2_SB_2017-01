@@ -299,9 +299,9 @@ void preenche_lista_labels(ifstream *entrada, vector<Label>& lista_labels, int *
     entrada->seekg(0, ios::beg); //Volta a ler do inicio do arquivo
     *ILC += pc;
 
-    label_aux.nome_label = "const";
-    label_aux.endereco_label = -2;
-    lista_labels.push_back(label_aux);
+    // label_aux.nome_label = "const";
+    // label_aux.endereco_label = -2;
+    // lista_labels.push_back(label_aux);
 
     pc = 0;
     while(getline(*entrada, le_instrucao, '\n')){
@@ -320,11 +320,13 @@ void preenche_lista_labels(ifstream *entrada, vector<Label>& lista_labels, int *
             instrucao >> label;
 
             if(label[0] != '_' && label != "IO"){ //Testa se o endereço da instrução é uma constante
-                for(int i=0; i<lista_labels.size(); i++){
-                    if(lista_labels[i].nome_label == "const"){
-                       lista_labels[i].endereco_instrucoes.push_back(pc);
-                    }
-                }
+                label_aux.nome_label = "const("+label+")";
+                label_aux.endereco_label = atoi(label.c_str());
+                label_aux.endereco_instrucoes.push_back(pc);
+
+                lista_labels.push_back(label_aux);
+
+                label_aux.endereco_instrucoes.clear();
             }
 
             for(int i=0; i<lista_labels.size(); i++){ //Passa procurando pela lista de externs

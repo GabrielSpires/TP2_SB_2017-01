@@ -1,6 +1,6 @@
 .extern _multiplica
-load A0 IO
-load A1 IO
-store IO A0
+loadi A0 IO
+loadi A1 IO
 call _multiplica
+storei IO A0
 exit

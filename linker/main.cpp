@@ -1,11 +1,14 @@
 #include "funcoes_linker.h"
 
 int main(int argc, char const *argv[]){
-    ofstream saida_montador; //Arquivo que vai ser gerado na função "ligacao()"
+    ofstream saida_montador, saida_mif; //Arquivo que vai ser gerado na função "ligacao()"
     ifstream saida_ligacao; //Vai ler o arquivo gerado na ligação pra ser usado depois
     vector<bitset<8> > memoria(256, 0); //Lista de 256 binarios de 8 bits iniciados com 0
     vector<Label> lista_labels; //Lista do tipo Label que guarda o nome e endereço de cada label
     vector<Extern> lista_externs;
+    string nome_saida;
+
+
 
     ligacao(&saida_montador, argc, argv);
 
@@ -17,27 +20,30 @@ int main(int argc, char const *argv[]){
 
     recalcula_memoria(memoria, lista_labels);
 
-    cout << " -------------------------- LABELS" << endl;
-    for(int i=0; i<lista_labels.size(); i++){
-        cout << lista_labels[i].nome_label << " "
-             << lista_labels[i].endereco_label << " ";
-        for(int j=0; j<lista_labels[i].endereco_instrucoes.size(); j++){
-            cout << lista_labels[i].endereco_instrucoes[j] << " ";
-        }cout << endl;
-    }
-    cout << " -------------------------- EXTERNS" << endl;
-    for(int i=0; i<lista_externs.size(); i++){
-        cout << lista_externs[i].nome_extern << " "
-             << lista_externs[i].endereco_extern << " ";
-        for(int j=0; j<lista_externs[i].endereco_instrucoes.size(); j++){
-            cout << lista_externs[i].endereco_instrucoes[j] << " ";
-        }cout << endl;
-    }
+    // cout << " -------------------------- LABELS" << endl;
+    // for(int i=0; i<lista_labels.size(); i++){
+    //     cout << lista_labels[i].nome_label << " "
+    //          << lista_labels[i].endereco_label << " ";
+    //     for(int j=0; j<lista_labels[i].endereco_instrucoes.size(); j++){
+    //         cout << lista_labels[i].endereco_instrucoes[j] << " ";
+    //     }cout << endl;
+    // }
+    // cout << " -------------------------- EXTERNS" << endl;
+    // for(int i=0; i<lista_externs.size(); i++){
+    //     cout << lista_externs[i].nome_extern << " "
+    //          << lista_externs[i].endereco_extern << " ";
+    //     for(int j=0; j<lista_externs[i].endereco_instrucoes.size(); j++){
+    //         cout << lista_externs[i].endereco_instrucoes[j] << " ";
+    //     }cout << endl;
+    // }
 
-    saida_ligacao.close();
 
-    printa_memoria(memoria);
+    nome_saida = string(argv[1])+".mif";
+    saida_mif.open(nome_saida.c_str());
+
+    printa_memoria(&saida_mif, memoria);
     
+    saida_ligacao.close();
     return 0;
 }
 

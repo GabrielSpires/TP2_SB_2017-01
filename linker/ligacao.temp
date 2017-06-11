@@ -5,7 +5,6 @@ _opp2 34 14 X
 _opp3 38 18 X
 _opp4 42 22 X
 _opp5 46 26 X
-const -2 X
 END_LABELS
 _op1 -1 30 X
 _op2 -1 34 X
@@ -72,7 +71,6 @@ _A2maiorA1 14 10 X
 _A3_maior 24 18 36 X
 _A1_maior_A2 28 6 X
 _A1maiorA2 32 28 X
-const -2 X
 END_LABELS
 END_EXTERNS
 01010100
@@ -127,7 +125,6 @@ _A1_menor 24 18 X
 _A2_menor_A1 28 6 X
 _A2menorA1 32 28 X
 _A2_menor 42 36 X
-const -2 X
 END_LABELS
 END_EXTERNS
 01010100
@@ -178,7 +175,6 @@ MODULE_END
 MODULE_START
 op3_soma_3 8
 _op3 0 X
-const -2 X
 END_LABELS
 END_EXTERNS
 00011001
@@ -193,7 +189,6 @@ MODULE_END
 MODULE_START
 op4_multiply_3 8
 _op4 0 X
-const -2 X
 END_LABELS
 END_EXTERNS
 00101001
@@ -208,7 +203,6 @@ MODULE_END
 MODULE_START
 op5_media_3 12
 _op5 0 X
-const -2 X
 END_LABELS
 END_EXTERNS
 00011001

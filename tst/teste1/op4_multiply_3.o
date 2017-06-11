@@ -1,7 +1,6 @@
 MODULE_START
 op4_multiply_3 8
 _op4 0 X
-const -2 X
 END_LABELS
 END_EXTERNS
 00101001

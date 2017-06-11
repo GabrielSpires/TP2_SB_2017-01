@@ -7,7 +7,6 @@ _A1_menor 24 18 X
 _A2_menor_A1 28 6 X
 _A2menorA1 32 28 X
 _A2_menor 42 36 X
-const -2 X
 END_LABELS
 END_EXTERNS
 01010100

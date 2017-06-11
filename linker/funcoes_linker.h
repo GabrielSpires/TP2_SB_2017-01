@@ -40,4 +40,4 @@ void recalcula_memoria(vector<bitset<8> >&, vector<Label>);
 
 void limpa_string(stringstream&);
 
-void printa_memoria(/*ofstream *, */vector<bitset<8> >);
+void printa_memoria(ofstream *, vector<bitset<8> >);

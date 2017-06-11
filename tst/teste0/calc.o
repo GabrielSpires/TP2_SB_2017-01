@@ -1,7 +1,6 @@
 MODULE_START
 calc 4
-_multiplica 0 2 4 X
-const -2 5 8 12 X
+_multiplica 0 X
 END_LABELS
 END_EXTERNS
 00101000
