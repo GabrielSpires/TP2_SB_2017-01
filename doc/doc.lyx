@@ -139,8 +139,41 @@ Raydan Elias Gaspar
 Introdução
 \end_layout
 
+\begin_layout Standard
+No primeiro trabalho prático foi implementado um montador para a máquina
+ Swombat que basicamente traduzia um programa em assembly para linguagem
+ de máquina.
+ Mas o montador conseguia apenas traduzir programas constituídos de apenas
+ um arquivo, programas modulares não funcionariam no montador antigo.
+ Para resolver esse problema, nesse trabalho foi implementado um 
+\emph on
+ligador
+\emph default
+ que faz o trabalho de unir os vários módulos que o montador traduz separadament
+e.
+ Para conseguir ligar os módulos, o montador fornece ao ligador informações
+ adicionais sobre cada módulo como a lista de símbolos contidos no módulo,
+ o tamanho do módulo, e qualquer outra informação que ajude a realocar os
+ endereços de memória usados em cada módulo, além do código binário do programa
+ montado.
+\end_layout
+
 \begin_layout Section
 Desenvolvimento
+\end_layout
+
+\begin_layout Standard
+O primeiro passo para desenvolver o ligador foi adaptar o montador do primeiro
+ trabalho para fornecer informações necessárias para unir os módulos.
+ Essa adaptação é necessária, uma vez que sem ela cada módulo de um programa
+ seria montado como um programa independente e teríamos problemas caso um
+ módulo tentasse usar uma função que é declarada em outro módulo, já que
+ o endereço dessa função não seria conhecido.
+\end_layout
+
+\begin_layout Standard
+A primeira parte do módulo é constituída pelas informações que o ligador
+ usará para vincular os módulos
 \end_layout
 
 \begin_layout Section

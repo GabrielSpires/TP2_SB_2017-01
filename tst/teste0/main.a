@@ -2,5 +2,5 @@
 loadi A0 IO
 loadi A1 IO
 call _multiplica
-storei IO A0
+storei A0 IO
 exit
