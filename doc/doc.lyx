@@ -162,6 +162,10 @@ e.
 Desenvolvimento
 \end_layout
 
+\begin_layout Subsection
+Montador
+\end_layout
+
 \begin_layout Standard
 O primeiro passo para desenvolver o ligador foi adaptar o montador do primeiro
  trabalho para fornecer informações necessárias para unir os módulos.
@@ -173,7 +177,111 @@ O primeiro passo para desenvolver o ligador foi adaptar o montador do primeiro
 
 \begin_layout Standard
 A primeira parte do módulo é constituída pelas informações que o ligador
- usará para vincular os módulos
+ usará para vincular os módulos.
+ Cada módulo começa com a string 
+\begin_inset Quotes eld
+\end_inset
+
+MODULE_START
+\begin_inset Quotes erd
+\end_inset
+
+ que é usada na hora da ligação para separar o início de cada módulo.
+ Depois temos o nome do arquivo onde o módulo está contido (apenas para
+ fins de debug, esse nome não é usado no ligador) e o tamanho do módulo
+ que é usado mais tarde para atualizar a constante de relocação.
+ Depois todas as 
+\emph on
+Labels
+\emph default
+ e constantes do módulo são declaradas acompanhadas pelo seu endereço na
+ memória e o endereço de todas as instruções que utilizam a label.
+ Logo abaixo das labels temos uma lista com todos os 
+\emph on
+.extern
+\emph default
+ do módulo seguindo o mesmo padrão.
+ As listas de 
+\emph on
+Labels
+\emph default
+ e 
+\emph on
+Externs
+\emph default
+ são delimitadas pelas strings 
+\begin_inset Quotes eld
+\end_inset
+
+END_LABELS
+\begin_inset Quotes erd
+\end_inset
+
+ e 
+\begin_inset Quotes eld
+\end_inset
+
+END_EXTERNS
+\begin_inset Quotes erd
+\end_inset
+
+ respectivamente.
+\end_layout
+
+\begin_layout Standard
+Na segunda parte do módulo temos o código binário já devidamente traduzido.
+ O final do módulo é marcado pela string 
+\begin_inset Quotes eld
+\end_inset
+
+MODULE_END
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Ligador
+\end_layout
+
+\begin_layout Standard
+Ao receber os módulos gerados pelo montador, o ligador primeiro lê todos
+ os arquivos de entrada e concatena todos em um arquivo temporário chamado
+ 
+\begin_inset Quotes eld
+\end_inset
+
+ligacao.temp
+\begin_inset Quotes erd
+\end_inset
+
+ que serve de guia para o resto do programa.
+ Depois o ligador basicamente desfaz todo o trabalho do montador ao ler
+ todas as 
+\emph on
+labels 
+\emph default
+e
+\emph on
+ externs
+\emph default
+ de todos os módulos e colocá-los em uma lista.
+ Nesta estapa o ligador também escreve no vetor de memória o código binário
+ traduzido pelo montador.
+ Caso exista alguma label repetida (duas labels listadas com o mesmo nome),
+ elas são juntadas em uma só por motivos de organização.
+\end_layout
+
+\begin_layout Standard
+Depois cada extern é localizado na lista de labels para que seu endereço
+ seja alterado e se possa fazer a devida alteração na memória posteriormente.
+\end_layout
+
+\begin_layout Standard
+Com todos os externs localizados e cada label com seus respectivos endereços
+ de memória, os valores de memória escritos pelo montador são recalculados
+ para que todos os módulos funcionem como um programa só.
 \end_layout
 
 \begin_layout Section

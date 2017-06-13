@@ -8,8 +8,7 @@ int main(int argc, char const *argv[]){
     vector<Extern> lista_externs;
     string nome_saida;
 
-
-
+    //Lê todos os arquivos e concatena eles em um só
     ligacao(&saida_montador, argc, argv);
 
     relocacao(&saida_ligacao, memoria, lista_labels, lista_externs);
