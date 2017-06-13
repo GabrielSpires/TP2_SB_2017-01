@@ -1,0 +1,202 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\date{}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 3cm
+\rightmargin 2.5cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Programa Teste do Monitor
+\end_layout
+
+\begin_layout Standard
+Inicialmente o programa recebe os 4 dados de entrada, A, B, C e OP, e guarda
+ o valor 1 dentro do registrador A7.
+ Em seguida ocorre uma série de subtrações e comparações para saber qual
+ operação será feita sobre os valores de entrada.
+ Se o valor da operação for 1, será chamado o procedimento _opp1, que retorna
+ o maior número entre 3 três.
+ Caso esse procedimento não seja chamado, o valor da operação é subtraído
+ de 1 e, se for chamado o procedimento _opp2, será retornado o menor de
+ 3 números.
+ Caso o procedimento _opp2 não for chamado, será subtraído 1 do valor da
+ operação e, se for chamado o procedimento _opp3, será retornado a soma
+ dos 3 números.
+ Esse processo de subtração e comparação do valor subtraído com o valor
+ 0 é feito para as 5 chamadas de procedimentos possíveis.
+ Caso o número da operação seja diferente de 1, 2, 3, 4 e 5, o programa
+ não fará nada.
+\end_layout
+
+\begin_layout Standard
+Se o procedimento _opp1 for chamado, será retornado o maior valor entre
+ A, B e C.
+ Esse procedimento chamará outro procedimento, chamado _op1 que se encontra
+ dentro do módulo op1_maior_3.a .
+ Inicialmente, em _op1, move-se o primeiro valor, no caso A, para o registrador
+ A4.
+ Em seguida é feita a subtração de A pelo valor de B, que se encontra armazenado
+ em A2.
+ Se o resultado da subtração for menor que 0, significa que B é maior que
+ A, e nesse caso é chamado outro procedimento, chamado _B_maior_A; porem,
+ se o resultado da substração for maior que 0, significa que A é maior que
+ B, e será chamado o procedimento _A_maior_b.
+ Caso o procedimento _B_maior_A for chamado, esse procedimento chamará outro
+ procedimento chamado _BmaiorA.
+ Inicialmente, o valor de B é copiado para o registrador A5.
+ Em seguida é feita a subtração de B pelo valor de C.
+ Se o resultado da subtração for menor que 0, significa que C é maior que
+ B e, consequentemente, C será o maior valor entre os 3.
+ Para retornar o valor de C, será chamado o procedimento _C_maior que imprime
+ na tela o valor de C.
+ Caso o valor da subtração seja maior que 0, significa que B é maior que
+ C e, consequentemente, B será o maior dentre os 3.
+ Voltando ao caso em que o procedimento _A_maior_B é chamado, esse procedimento
+ chamará outro procedimento chamado _AmaiorB.
+ Inicialmente, o valor de A é copiado para A5 e em seguida é feita a subtração
+ de A por C.
+ Se o valor da subtração é menor que 0, C será o maior entre os 3, se o
+ resultado for maior que 0, nessa caso A será o maior valor dos 3.
+\end_layout
+
+\begin_layout Standard
+Se procedimento _opp2 for chamado, será retornado o menor valor entre 3
+ números.
+ Esse procedimento chamará outro procedimento, chamado _op2 que se encontra
+ dentro do módulo op2_menor_3.a .
+ Inicialmente, o valor de A é guardado em A4 e em seguida é feita a subtração
+ de A por B.
+ Se o valor da subtração for menor que 0, significa que A é menor que B
+ e será chamado outro procedimento, chamado _A_menor_B.
+ Caso o valor da subtração seja maior que 0, significa que B é menor que
+ A e será chamado outro procedimento, chamado _B_menor_A.
+ Caso o procedimento _A_menor_B for chamado, ele chamará outro procedimento,
+ chamado _AmenorB.
+ Inicialmente o valor de A é copiado para A5 e em seguida é feita a subtração
+ de A por C.
+ Se o resultado for menor que 0, significa que A menor que C e, consequentemente
+, será o menor entre os 3.
+ Será chamado o procedimento _A_menor que imprime na tela o valor de A.
+ Se o resultado da subtração for maior que 0, significa que C é menor que
+ A e, consequentemente, será o menor dos 3 e seu valor será impresso na
+ tela.
+ Voltando ao caso em que é chamado o procedimento _B_menor_A, esse procedimento
+ chamará outro procedimento, chamado _BmenorA.
+ Inicialmente, o valor de B é copiado para A5 e em seguida é feita a subtração
+ de B por C.
+ Se o resultado da subtração for menor que 0, significa que B é menor que
+ C e, consequentemente, será o menor dos 3.
+ Será chamado o procedimento _B_menor que imprimirá o valor de B na tela.
+ Caso o valor da subtração seja maior que 0, significa que C será menor
+ B e, consequentemente, terá o seu valor impresso na tela.
+\end_layout
+
+\begin_layout Standard
+Se o procedimento _opp3 for chamado, será retornado a soma entre 3 números.
+ Esse procedimento chamará outro procedimento, chamado _op3 que se encontra
+ dentro do módulo op3_soma_3.a .
+ Inicialmente, faz se a soma entre A e B e o resultado é guardado em A.
+ Em seguida esse resultado é somado a C e será guardado em A.
+ Por fim o valor armazenado em A será impresso na tela.
+\end_layout
+
+\begin_layout Standard
+Se o procedimento _opp4 for chamado, será retornado a multiplicação entre
+ 3 números.
+ Esse procedimento chamará outro procedimento, chamado _op4 que se encontra
+ dentro do módulo op4_multiply_3.a .
+ Inicialmente, faz-se a multiplicação entre A e B e o resultado é guardado
+ dentro de A.
+ Em seguida, esse resultado é multiplicado por C e o novo resultado é guardado
+ dentro de A.
+ Por fim o resultado armazenado em A será impresso na tela.
+\end_layout
+
+\begin_layout Standard
+Se o procedimento _opp5 for chamado, será retornado a média entre 3 números.
+ Esse procedimento chamará outro procedimento, chamado _op5 que se encontra
+ dentro do módulo op5_media_3.a .
+ Inicialmente, é feita a soma de A com B e o resultado é guardado dentro
+ de A.
+ Em seguida, esse resultado é somado com C e o novo resultado é guardado
+ dentro de A.
+ O valor 3 é guardado dentro de A4 e por fim, será feita a divisão da soma
+ dos 3 números por 3.
+ Esse valor será guardado dentro de A que terá seu valor impresso na tela.
+\end_layout
+
+\end_body
+\end_document
