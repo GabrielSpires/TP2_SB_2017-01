@@ -1,6 +1,0 @@
-_op5: add A1 A2                                 ; A = A + B
-	     add A1 A3 				   ; A = (A + B) + C
-	     loadc A4 3 		        	   ; A4 = 3
-	     divide A1 A4			   ; A = (A +B +C) / 3
-	     storei A1 IO
-	     return

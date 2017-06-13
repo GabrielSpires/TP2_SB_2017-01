@@ -1,4 +1,4 @@
-_op4: multiply A1 A2                                 ; A1 = A1 * A2
-	  multiply A1 A3 				; A1 = (A1 * A2) * A3 		        
-	  storei A1 IO
-	   return
+_op4: multiply A1 A2    ; A = A * B
+       multiply A1 A3   ; A = (A * B) * C
+       storei A1 IO
+       return

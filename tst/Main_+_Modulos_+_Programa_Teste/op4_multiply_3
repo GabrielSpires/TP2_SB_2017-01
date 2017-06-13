@@ -1,4 +1,0 @@
-_op4: multiply A1 A2                              ; A = A * B
-	   multiply A1 A3 				; A = (A * B) * C 		        
-	   storei A1 IO
-	   return

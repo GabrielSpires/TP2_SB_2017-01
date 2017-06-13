@@ -176,7 +176,10 @@ O primeiro passo para desenvolver o ligador foi adaptar o montador do primeiro
 \end_layout
 
 \begin_layout Standard
-A primeira parte do módulo é constituída pelas informações que o ligador
+Além de traduzir o programa como já fazia no primeiro trabalho, o montador
+ agora imprime em um arquivo algumas informações que são lidas pelo ligador
+ na hora de fazer a ligação e relocação.
+ A primeira parte do módulo é constituída pelas informações que o ligador
  usará para vincular os módulos.
  Cada módulo começa com a string 
 \begin_inset Quotes eld
@@ -186,21 +189,35 @@ MODULE_START
 \begin_inset Quotes erd
 \end_inset
 
- que é usada na hora da ligação para separar o início de cada módulo.
+ que é usada na hora da ligação para separar o início de cada módulo já
+ que todos os módulos são unidos no mesmo arquivo e depois lidos sequencialmente.
  Depois temos o nome do arquivo onde o módulo está contido (apenas para
  fins de debug, esse nome não é usado no ligador) e o tamanho do módulo
- que é usado mais tarde para atualizar a constante de relocação.
+ que é usado mais tarde para atualizar a constante de relocação, essa variável
+ representa quanto de memória cada módulo utiliza.
  Depois todas as 
 \emph on
 Labels
 \emph default
- e constantes do módulo são declaradas acompanhadas pelo seu endereço na
- memória e o endereço de todas as instruções que utilizam a label.
- Logo abaixo das labels temos uma lista com todos os 
+ e constantes do módulo são escritas uma por linha acompanhadas por vários
+ números inteiros, o primeiro desses números é o seu endereço na memória
+ e os números seguintes são os endereços de todas as instruções que utilizam
+ a label ou a constante.
+ Um 
+\begin_inset Quotes eld
+\end_inset
+
+X
+\begin_inset Quotes erd
+\end_inset
+
+ sinaliza o fim dos endereços.
+ Logo abaixo das labels temos uma lista com todas as labels declaradas com
+ 
 \emph on
 .extern
 \emph default
- do módulo seguindo o mesmo padrão.
+ do módulo seguindo o mesmo padrão para os endereços.
  As listas de 
 \emph on
 Labels
@@ -277,8 +294,9 @@ e
 \emph on
  externs
 \emph default
- de todos os módulos e colocá-los em uma lista.
- Nesta estapa o ligador também escreve no vetor de memória o código binário
+ de todos os módulos e colocá-los em uma lista juntamente com seus respectivos
+ endereços já somados à constante de relocação.
+ Nesta etapa o ligador também escreve no vetor de memória o código binário
  de todos os módulos traduzidos pelo montador.
  Caso exista alguma label repetida (duas labels listadas com o mesmo nome),
  elas são juntadas em uma só na função 
@@ -302,10 +320,17 @@ Com todos os externs localizados e cada label com seus respectivos endereços
  de memória, os valores de memória escritos pelo montador são recalculados
  usando a lista de labels como referência para que todos os módulos funcionem
  como um programa só.
+ Por fim a memória é escrita no formato mif.
 \end_layout
 
 \begin_layout Section
 Programas testados
+\end_layout
+
+\begin_layout Standard
+O principal teste utilizado foi o programa que deveria ser implementado
+ como parte do trabalho, que consiste em cinco operações diferentes, cada
+ uma declarada em um módulo separado.
 \end_layout
 
 \begin_layout Standard
@@ -438,6 +463,201 @@ Se o procedimento _opp5 for chamado, será retornado a média entre 3 números.
 
 \begin_layout Section
 Testes e simulações
+\end_layout
+
+\begin_layout Standard
+Para testar a saída do ligador carregamos o arquivo 
+\emph on
+mif
+\emph default
+ que o ligador gera no CPUSim e rodamos uma vez para cada operação.
+ O primeiro número da entrada é a operação a ser executada e os 3 últimos
+ são os números que são usados nas operações.
+ A saída dos testes segue abaixo:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/kastor/Área de Trabalho/Software Basico/TP2_SB_2017-01/doc/teste_op1.png
+	width 75page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Teste da operação 1 (maior dos números)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/kastor/Área de Trabalho/Software Basico/TP2_SB_2017-01/doc/teste_op2.png
+	width 75page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Teste da operação 2 (menor dos números)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/kastor/Área de Trabalho/Software Basico/TP2_SB_2017-01/doc/teste_op3.png
+	width 75page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Teste da operação 3 (soma dos números)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/kastor/Área de Trabalho/Software Basico/TP2_SB_2017-01/doc/teste_op4.png
+	width 75page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Teste da operação 4 (produto dos números)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/kastor/Área de Trabalho/Software Basico/TP2_SB_2017-01/doc/teste_op5.png
+	width 75page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Teste da operação 5 (média dos números)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

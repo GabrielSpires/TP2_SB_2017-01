@@ -1,13 +1,5 @@
 tp1: main.cpp funcoes.cpp
-	g++ -o mont main.cpp funcoes.cpp
-	@echo ""
-	@echo "Programa compilado com sucesso!"
-	@echo "Um executável chamado 'mont' foi criado."
-	@echo "Para executar use o comando ./mont entrada.a saida.o"
-	@echo ""
-	@echo "Para testar uma das saídas use o comando 'make run'"
-	@echo "Para remover o executável compilado use o comando 'make clean'"
-	@echo ""
+	@g++ -o mont main.cpp funcoes.cpp
 
 run: main.cpp funcoes.cpp
 	@g++ -o mont main.cpp funcoes.cpp
