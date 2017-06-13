@@ -247,8 +247,15 @@ Ligador
 
 \begin_layout Standard
 Ao receber os módulos gerados pelo montador, o ligador primeiro lê todos
- os arquivos de entrada e concatena todos em um arquivo temporário chamado
+ os arquivos de entrada na função 
+\emph on
+recebe_entrada(
+\emph default
+)
+\emph on
  
+\emph default
+e concatena todos em um arquivo temporário chamado 
 \begin_inset Quotes eld
 \end_inset
 
@@ -257,8 +264,12 @@ ligacao.temp
 \end_inset
 
  que serve de guia para o resto do programa.
- Depois o ligador basicamente desfaz todo o trabalho do montador ao ler
- todas as 
+ Depois na função 
+\emph on
+ligacao() 
+\emph default
+o ligador basicamente desfaz todo o trabalho do montador ao ler todas as
+ 
 \emph on
 labels 
 \emph default
@@ -268,24 +279,161 @@ e
 \emph default
  de todos os módulos e colocá-los em uma lista.
  Nesta estapa o ligador também escreve no vetor de memória o código binário
- traduzido pelo montador.
+ de todos os módulos traduzidos pelo montador.
  Caso exista alguma label repetida (duas labels listadas com o mesmo nome),
- elas são juntadas em uma só por motivos de organização.
+ elas são juntadas em uma só na função 
+\emph on
+junta_labels()
+\emph default
+ por motivos de organização.
 \end_layout
 
 \begin_layout Standard
-Depois cada extern é localizado na lista de labels para que seu endereço
- seja alterado e se possa fazer a devida alteração na memória posteriormente.
+Depois na função 
+\emph on
+localiza_externs()
+\emph default
+ cada extern é localizado na lista de labels para que seu endereço seja
+ alterado e se possa fazer a devida alteração na memória posteriormente.
 \end_layout
 
 \begin_layout Standard
 Com todos os externs localizados e cada label com seus respectivos endereços
  de memória, os valores de memória escritos pelo montador são recalculados
- para que todos os módulos funcionem como um programa só.
+ usando a lista de labels como referência para que todos os módulos funcionem
+ como um programa só.
 \end_layout
 
 \begin_layout Section
 Programas testados
+\end_layout
+
+\begin_layout Standard
+
+\lang brazilian
+Inicialmente o programa recebe os 4 dados de entrada, A, B, C e OP, e guarda
+ o valor 1 dentro do registrador A7.
+ Em seguida ocorre uma série de subtrações e comparações para saber qual
+ operação será feita sobre os valores de entrada.
+ Se o valor da operação for 1, será chamado o procedimento _opp1, que retorna
+ o maior número entre 3 três.
+ Caso esse procedimento não seja chamado, o valor da operação é subtraído
+ de 1 e, se for chamado o procedimento _opp2, será retornado o menor de
+ 3 números.
+ Caso o procedimento _opp2 não for chamado, será subtraído 1 do valor da
+ operação e, se for chamado o procedimento _opp3, será retornado a soma
+ dos 3 números.
+ Esse processo de subtração e comparação do valor subtraído com o valor
+ 0 é feito para as 5 chamadas de procedimentos possíveis.
+ Caso o número da operação seja diferente de 1, 2, 3, 4 e 5, o programa
+ não fará nada.
+\end_layout
+
+\begin_layout Standard
+
+\lang brazilian
+Se o procedimento _opp1 for chamado, será retornado o maior valor entre
+ A, B e C.
+ Esse procedimento chamará outro procedimento, chamado _op1 que se encontra
+ dentro do módulo op1_maior_3.a .
+ Inicialmente, em _op1, move-se o primeiro valor, no caso A, para o registrador
+ A4.
+ Em seguida é feita a subtração de A pelo valor de B, que se encontra armazenado
+ em A2.
+ Se o resultado da subtração for menor que 0, significa que B é maior que
+ A, e nesse caso é chamado outro procedimento, chamado _B_maior_A; porem,
+ se o resultado da substração for maior que 0, significa que A é maior que
+ B, e será chamado o procedimento _A_maior_b.
+ Caso o procedimento _B_maior_A for chamado, esse procedimento chamará outro
+ procedimento chamado _BmaiorA.
+ Inicialmente, o valor de B é copiado para o registrador A5.
+ Em seguida é feita a subtração de B pelo valor de C.
+ Se o resultado da subtração for menor que 0, significa que C é maior que
+ B e, consequentemente, C será o maior valor entre os 3.
+ Para retornar o valor de C, será chamado o procedimento _C_maior que imprime
+ na tela o valor de C.
+ Caso o valor da subtração seja maior que 0, significa que B é maior que
+ C e, consequentemente, B será o maior dentre os 3.
+ Voltando ao caso em que o procedimento _A_maior_B é chamado, esse procedimento
+ chamará outro procedimento chamado _AmaiorB.
+ Inicialmente, o valor de A é copiado para A5 e em seguida é feita a subtração
+ de A por C.
+ Se o valor da subtração é menor que 0, C será o maior entre os 3, se o
+ resultado for maior que 0, nessa caso A será o maior valor dos 3.
+\end_layout
+
+\begin_layout Standard
+
+\lang brazilian
+Se procedimento _opp2 for chamado, será retornado o menor valor entre 3
+ números.
+ Esse procedimento chamará outro procedimento, chamado _op2 que se encontra
+ dentro do módulo op2_menor_3.a .
+ Inicialmente, o valor de A é guardado em A4 e em seguida é feita a subtração
+ de A por B.
+ Se o valor da subtração for menor que 0, significa que A é menor que B
+ e será chamado outro procedimento, chamado _A_menor_B.
+ Caso o valor da subtração seja maior que 0, significa que B é menor que
+ A e será chamado outro procedimento, chamado _B_menor_A.
+ Caso o procedimento _A_menor_B for chamado, ele chamará outro procedimento,
+ chamado _AmenorB.
+ Inicialmente o valor de A é copiado para A5 e em seguida é feita a subtração
+ de A por C.
+ Se o resultado for menor que 0, significa que A menor que C e, consequentemente
+, será o menor entre os 3.
+ Será chamado o procedimento _A_menor que imprime na tela o valor de A.
+ Se o resultado da subtração for maior que 0, significa que C é menor que
+ A e, consequentemente, será o menor dos 3 e seu valor será impresso na
+ tela.
+ Voltando ao caso em que é chamado o procedimento _B_menor_A, esse procedimento
+ chamará outro procedimento, chamado _BmenorA.
+ Inicialmente, o valor de B é copiado para A5 e em seguida é feita a subtração
+ de B por C.
+ Se o resultado da subtração for menor que 0, significa que B é menor que
+ C e, consequentemente, será o menor dos 3.
+ Será chamado o procedimento _B_menor que imprimirá o valor de B na tela.
+ Caso o valor da subtração seja maior que 0, significa que C será menor
+ B e, consequentemente, terá o seu valor impresso na tela.
+\end_layout
+
+\begin_layout Standard
+
+\lang brazilian
+Se o procedimento _opp3 for chamado, será retornado a soma entre 3 números.
+ Esse procedimento chamará outro procedimento, chamado _op3 que se encontra
+ dentro do módulo op3_soma_3.a .
+ Inicialmente, faz se a soma entre A e B e o resultado é guardado em A.
+ Em seguida esse resultado é somado a C e será guardado em A.
+ Por fim o valor armazenado em A será impresso na tela.
+\end_layout
+
+\begin_layout Standard
+
+\lang brazilian
+Se o procedimento _opp4 for chamado, será retornado a multiplicação entre
+ 3 números.
+ Esse procedimento chamará outro procedimento, chamado _op4 que se encontra
+ dentro do módulo op4_multiply_3.a .
+ Inicialmente, faz-se a multiplicação entre A e B e o resultado é guardado
+ dentro de A.
+ Em seguida, esse resultado é multiplicado por C e o novo resultado é guardado
+ dentro de A.
+ Por fim o resultado armazenado em A será impresso na tela.
+\end_layout
+
+\begin_layout Standard
+
+\lang brazilian
+Se o procedimento _opp5 for chamado, será retornado a média entre 3 números.
+ Esse procedimento chamará outro procedimento, chamado _op5 que se encontra
+ dentro do módulo op5_media_3.a .
+ Inicialmente, é feita a soma de A com B e o resultado é guardado dentro
+ de A.
+ Em seguida, esse resultado é somado com C e o novo resultado é guardado
+ dentro de A.
+ O valor 3 é guardado dentro de A4 e por fim, será feita a divisão da soma
+ dos 3 números por 3.
+ Esse valor será guardado dentro de A que terá seu valor impresso na tela.
 \end_layout
 
 \begin_layout Section
@@ -294,6 +442,22 @@ Testes e simulações
 
 \begin_layout Section
 Conclusão
+\end_layout
+
+\begin_layout Standard
+No processo de desenvolvimento do ligador, a parte mais importante acabou
+ se mostrando ser a adaptação do montador.
+ Desenvolver o ligador em si envolveu basicamente criar um método para ler
+ as informações que o montador disponibilizou, o que pode ser interpretado
+ como o trabalho inverso do montador.
+ Talvez criar tudo como um programa só fosse mais eficiente, uma vez que
+ o processo de ligação poderia ser feito direto em tempo de execução e não
+ seria necessário criar arquivos de saída para cada módulo com exceção da
+ saída principal do programa.
+ A dificuldade principal encontrada foi achar um meio de escrever todas
+ as informações necessárias de modo que fosse fácil para o ligador decodificá-la
+s, mas seguindo um padrão próximo ao apresentado no livro da disciplina
+ esse problema pôde ser contornado.
 \end_layout
 
 \end_body

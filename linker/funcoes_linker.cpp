@@ -5,7 +5,7 @@ void limpa_string(stringstream& linha_stream){
     linha_stream.clear(); //Apaga o buffer da string
 }
 
-void relocacao(ifstream* saida_ligacao, vector<bitset<8> > &memoria, vector<Label> &lista_labels, vector<Extern>& lista_externs){
+void ligacao(ifstream* saida_ligacao, vector<bitset<8> > &memoria, vector<Label> &lista_labels, vector<Extern>& lista_externs){
 	string linha, nome_modulo, campo;
 	stringstream linha_stream;
 	Label label_aux;
@@ -85,7 +85,7 @@ void relocacao(ifstream* saida_ligacao, vector<bitset<8> > &memoria, vector<Labe
 	saida_ligacao->close();
 }
 
-void ligacao(ofstream* saida_montador, int argc, char const** argv){
+void recebe_entrada(ofstream* saida_montador, int argc, char const** argv){
 	ifstream modulo_objeto;
 	string linha_modulo;
 
@@ -143,7 +143,7 @@ void localiza_externs(vector<Label>& lista_labels, vector<Extern>& lista_externs
 	}
 }
 
-void recalcula_memoria(vector<bitset<8> >& memoria, vector<Label> lista_labels){
+void relocacao(vector<bitset<8> >& memoria, vector<Label> lista_labels){
 	for(int i=0; i<lista_labels.size(); i++){
 		if(lista_labels[i].nome_label != "const"){
 			
